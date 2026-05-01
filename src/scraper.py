@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-from typing import Iterable
+from typing import Callable, Iterable
 
 from apify_client import ApifyClient
 
@@ -22,7 +22,6 @@ class Post:
 
 
 def _parse_timestamp(raw: str) -> datetime:
-    # Apify returns "2026-04-30T22:14:00.000Z"
     return datetime.fromisoformat(raw.replace("Z", "+00:00"))
 
 
@@ -56,6 +55,9 @@ def parse_hashtag_items(
     return posts
 
 
+ProgressCallback = Callable[[str, int], None]
+
+
 def fetch_recent_posts(
     *,
     apify_token: str,
@@ -63,6 +65,7 @@ def fetch_recent_posts(
     posts_per_hashtag: int,
     lookback_hours: int,
     now: datetime | None = None,
+    on_hashtag_done: ProgressCallback | None = None,
 ) -> list[Post]:
     client = ApifyClient(apify_token)
     cutoff = (now or datetime.now(timezone.utc)) - timedelta(hours=lookback_hours)
@@ -76,7 +79,12 @@ def fetch_recent_posts(
         }
         run = client.actor(HASHTAG_ACTOR).call(run_input=run_input)
         if not run or "defaultDatasetId" not in run:
+            if on_hashtag_done:
+                on_hashtag_done(tag, 0)
             continue
-        items = client.dataset(run["defaultDatasetId"]).iterate_items()
-        all_posts.extend(parse_hashtag_items(items, matched_hashtag=tag, cutoff=cutoff))
+        items = list(client.dataset(run["defaultDatasetId"]).iterate_items())
+        parsed = parse_hashtag_items(items, matched_hashtag=tag, cutoff=cutoff)
+        all_posts.extend(parsed)
+        if on_hashtag_done:
+            on_hashtag_done(tag, len(parsed))
     return all_posts
