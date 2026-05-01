@@ -13,7 +13,7 @@ from src.config import load_config
 from src.excel import ExcelStore
 from src.filter import filter_candidates
 from src.profile import parse_profile_items
-from src.progress import TotalTimer, step
+from src.progress import TotalTimer, spinner, step
 from src.scraper import parse_hashtag_items
 
 logger = logging.getLogger("asakusa-leads")
@@ -119,22 +119,12 @@ def _live_run() -> int:
         logger.info("  → %d posts within last %dh", len(posts), cfg.scraper.lookback_hours)
 
     candidate_usernames = {p.owner_username for p in posts} - seen
-    profiles = {}
     with step(logger, f"Fetching {len(candidate_usernames)} profiles via Apify"):
-        # Apify processes profiles as one batch; show indeterminate spinner-style progress.
-        with tqdm(
-            total=None,
-            desc="profiles",
-            unit="users",
-            ncols=88,
-            bar_format="{desc}: {n_fmt} {unit} [{elapsed}]",
-        ) as bar:
-            bar.update(0)
+        with spinner(f"profiles ({len(candidate_usernames)} users)"):
             profiles = fetch_profiles(
                 apify_token=cfg.secrets.apify_token,
                 usernames=candidate_usernames,
             )
-            bar.update(len(profiles))
         logger.info("  → got %d profiles", len(profiles))
 
     with step(logger, "Filtering candidates"):

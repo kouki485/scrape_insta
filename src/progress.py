@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import logging
+import threading
 import time
 from contextlib import contextmanager
 from typing import Iterator
+
+from tqdm import tqdm
 
 
 def format_duration(seconds: float) -> str:
@@ -18,7 +22,7 @@ def format_duration(seconds: float) -> str:
 
 
 @contextmanager
-def step(logger, label: str) -> Iterator[None]:
+def step(logger: logging.Logger, label: str) -> Iterator[None]:
     """Log start, end, and elapsed time of a pipeline step."""
     logger.info("▶ %s …", label)
     start = time.monotonic()
@@ -33,8 +37,34 @@ def step(logger, label: str) -> Iterator[None]:
         logger.info("✓ %s (%s)", label, format_duration(elapsed))
 
 
+@contextmanager
+def spinner(desc: str, *, interval: float = 0.5, ncols: int = 88) -> Iterator[None]:
+    """Show an elapsed-time spinner while a blocking call runs."""
+    bar = tqdm(
+        total=None,
+        desc=desc,
+        ncols=ncols,
+        bar_format="{desc}: working… [{elapsed}]",
+        leave=True,
+    )
+    stop = threading.Event()
+
+    def tick() -> None:
+        while not stop.wait(interval):
+            bar.refresh()
+
+    thread = threading.Thread(target=tick, daemon=True)
+    thread.start()
+    try:
+        yield
+    finally:
+        stop.set()
+        thread.join(timeout=interval * 2)
+        bar.close()
+
+
 class TotalTimer:
-    def __init__(self):
+    def __init__(self) -> None:
         self._start = time.monotonic()
 
     def elapsed(self) -> float:
