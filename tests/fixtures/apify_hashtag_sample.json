@@ -1,0 +1,42 @@
+[
+  {
+    "id": "3123456789012345678",
+    "shortCode": "Czxabc12345",
+    "url": "https://www.instagram.com/p/Czxabc12345/",
+    "caption": "Sensoji at sunrise was magical 🌅 #asakusa #tokyo #japan",
+    "timestamp": "2026-04-30T22:14:00.000Z",
+    "ownerUsername": "taylor_travels",
+    "ownerFullName": "Taylor M.",
+    "hashtags": ["asakusa", "tokyo", "japan"]
+  },
+  {
+    "id": "3123456789012345679",
+    "shortCode": "Czxabc12346",
+    "url": "https://www.instagram.com/p/Czxabc12346/",
+    "caption": "今日は浅草寺に行ってきました！とても綺麗だった",
+    "timestamp": "2026-05-01T01:30:00.000Z",
+    "ownerUsername": "yamada_taro",
+    "ownerFullName": "山田太郎",
+    "hashtags": ["浅草寺"]
+  },
+  {
+    "id": "3123456789012345680",
+    "shortCode": "Czxabc12347",
+    "url": "https://www.instagram.com/p/Czxabc12347/",
+    "caption": "아사쿠사 진짜 좋아요!! 다음에 또 올게요",
+    "timestamp": "2026-05-01T03:45:00.000Z",
+    "ownerUsername": "kim_seoul",
+    "ownerFullName": "Kim S.",
+    "hashtags": ["아사쿠사"]
+  },
+  {
+    "id": "3123456789012345681",
+    "shortCode": "Czxabc12348",
+    "url": "https://www.instagram.com/p/Czxabc12348/",
+    "caption": "Old post should be filtered out",
+    "timestamp": "2026-04-25T10:00:00.000Z",
+    "ownerUsername": "old_poster",
+    "ownerFullName": "Old Poster",
+    "hashtags": ["asakusa"]
+  }
+]

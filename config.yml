@@ -1,0 +1,29 @@
+filters:
+  min_followers: 3000
+  max_followers: 500000
+  exclude_japanese: true
+  dedupe_window_days: 7
+
+scraper:
+  posts_per_hashtag: 100
+  lookback_hours: 24
+  location_id: "212988663"  # Asakusa, Tokyo (Instagram公式)
+  hashtags:
+    - asakusa
+    - sensoji
+    - asakusatemple
+    - kaminarimon
+    - 浅草寺
+    - 雷门
+    - 淺草寺
+    - 雷門
+    - 아사쿠사
+    - 센소지
+    - อาซากุสะ
+    - асакуса
+
+schedule:
+  cron: "0 23 * * *"  # 23:00 UTC = 08:00 JST
+
+excel:
+  output_path: output/asakusa_leads.xlsx

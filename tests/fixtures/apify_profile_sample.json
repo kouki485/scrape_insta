@@ -1,0 +1,34 @@
+[
+  {
+    "username": "taylor_travels",
+    "fullName": "Taylor M.",
+    "biography": "Travel blogger 🌍 NYC → Tokyo this week ✈️",
+    "followersCount": 12500,
+    "followsCount": 890,
+    "url": "https://www.instagram.com/taylor_travels/"
+  },
+  {
+    "username": "yamada_taro",
+    "fullName": "山田太郎",
+    "biography": "東京在住のカメラマン📷 浅草が大好き",
+    "followersCount": 8200,
+    "followsCount": 1100,
+    "url": "https://www.instagram.com/yamada_taro/"
+  },
+  {
+    "username": "kim_seoul",
+    "fullName": "Kim S.",
+    "biography": "Seoul → Tokyo trip 🇯🇵",
+    "followersCount": 5400,
+    "followsCount": 350,
+    "url": "https://www.instagram.com/kim_seoul/"
+  },
+  {
+    "username": "small_account",
+    "fullName": "Tiny",
+    "biography": "Just a regular tourist",
+    "followersCount": 250,
+    "followsCount": 400,
+    "url": "https://www.instagram.com/small_account/"
+  }
+]
